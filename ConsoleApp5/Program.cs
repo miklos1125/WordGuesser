@@ -27,6 +27,7 @@ namespace WordGuesser
                 w = new Words(Language.English);
             }
             string myWord = w.GetWord();
+            w = null;
             Guessing guessing = new Guessing(myWord);
             guessing.Start();
         }
@@ -34,10 +35,11 @@ namespace WordGuesser
 
     public enum Language {English, Hungarian}
 
-    public class Words 
+    public class Words
     {
         private string choosenWord;
-
+        
+        /* OLD ARRAYS, NOW WE USE FILES 
         private string[] hunWords = {
             "csokifagyi", "macskaszőr", "cseresznyefa",
             "zivatar", "sétahajó", "délután", 
@@ -47,31 +49,25 @@ namespace WordGuesser
             "claustrophobia", "mountain", "rainforest",
             "tornado", "midnight", "hippopotamus",
             "storyteller", "newspaper", "fisherman", "fireworks"};
-
+        */
         public Words(Language lan)
         { 
             System.Random random = new System.Random();
-            int length;
+            Encoding encoding = Encoding.UTF8;
+            string[] content; 
             switch (lan)
             {
                 case Language.English:
-                    length = engWords.Length;
-                    choosenWord = engWords[random.Next(0, length)];
+                    content = File.ReadAllLines("engwords.txt", encoding);
                     break;
                 case Language.Hungarian:
-                    length = hunWords.Length;
-                    choosenWord = hunWords[random.Next(0, length)];
+                    content = File.ReadAllLines("hunwords.txt", encoding);
+                    break;
+                default:
+                    content = File.ReadAllLines("engwords.txt", encoding);
                     break;
             }
-            FileReader();
-
-            void FileReader(){
-                string[] content = File.ReadAllLines("myfile.txt");
-                foreach (string line in content)
-                { 
-                    Console.WriteLine(line);
-                }
-            }
+            choosenWord = content[random.Next(0, content.Length)];
         }
 
         public string GetWord() { 
