@@ -1,0 +1,1 @@
+public enum Language {English, Hungarian}
