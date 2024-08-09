@@ -1,4 +1,3 @@
 # WordGuesser
 
-
-
+A C# application (a simple word guesser game) for experimenting with class, file and directory structures; command line compiling; using namespaces, dll and more... 
